@@ -1,0 +1,8 @@
+---
+Name: sidebar
+After: 
+  - '#sidebar'
+---
+# ShopItem:
+#   extensions:
+#     - StockShopItemExtension
