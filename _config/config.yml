@@ -3,6 +3,9 @@ Name: sidebar
 After: 
   - '#sidebar'
 ---
-# ShopItem:
-#   extensions:
-#     - StockShopItemExtension
+Page:
+  extensions:
+    - SidebarPageExtension
+Page_Controller:
+  extensions:
+    - SidebarPageControllerExtension

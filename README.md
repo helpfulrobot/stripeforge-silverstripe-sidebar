@@ -1,0 +1,1 @@
+delete Sidebar.ss and SidebarNavigation.ss from mysite Folder

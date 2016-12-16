@@ -1,4 +1,4 @@
 <?php
 
-global $sidebar;
-$sidebar = 'sidebar';
+global $moduleSidebar;
+$moduleSidebar = 'sidebar';
