@@ -9,3 +9,6 @@ Page:
 Page_Controller:
   extensions:
     - SidebarPageControllerExtension
+SiteConfig:
+  extensions:
+    - SidebareSiteConfigExtension

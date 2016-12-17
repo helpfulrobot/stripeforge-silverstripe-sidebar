@@ -1,6 +1,10 @@
 <?php
 class SidebarPageExtension extends DataExtension {
 
+  private static $db = [
+    'SidebarTemplateAttached' => 'Boolean'
+  ];
+
   private static $many_many = [
     'SidebarWidgets' => 'SidebarWidget'
   ];
@@ -8,6 +12,18 @@ class SidebarPageExtension extends DataExtension {
   private static $many_many_extraFields = [
     'SidebarWidgets' => ['SortOrder' => 'Int']
   ];
+
+  public function onBeforeWrite() {
+    parent::onBeforeWrite();
+
+    if(!$this->owner->SidebarTemplateAttached && $this->owner->ID && $template = SidebarTemplate::get()->find('PageType', $this->owner->ClassName)) {
+      foreach($template->SidebarWidgets() as $widget) {
+        $this->owner->SidebarWidgets()->add($widget, ['SortOrder' => $widget->SortOrder]);      
+      }
+
+      $this->owner->SidebarTemplateAttached = true;
+    }
+  }
 
   public function updateCMSFields(FieldList $fields) {
     $fields->addFieldsToTab('Root.Sidebar', [

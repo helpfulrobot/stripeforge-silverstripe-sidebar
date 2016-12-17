@@ -1,36 +1,34 @@
 <?php
-class SidebarWidget extends DataObject {
+class SidebarTemplate extends DataObject {
 
-  private static $singular_name = 'Text / Vorgefertigter Inhalt';
-  private static $plural_name = 'Text / Vorgefertigter Inhalt';
+  private static $singular_name = 'Sidebar Template';
+  private static $plural_name = 'Sidebar Templates';
 
   private static $db = [
     'Title' => 'Varchar(255)',
-    'ShowTitle' => 'Boolean',
-    'Content' => 'HTMLText',
-    'ExtraContent' => 'Varchar(20)'
+    'PageType' => 'Varchar(255)'
   ];
 
-  private static $has_one = [];
+  private static $has_one = [
+    'SiteConfig' => 'SiteConfig'
+  ];
+
   private static $belongs_to = [];
   private static $has_many = [];
-  private static $many_many = [];
-  private static $belongs_many_many = [
-    'Pages' => 'Page'
+
+  private static $many_many = [
+    'SidebarWidgets' => 'SidebarWidget'
   ];
 
-  // private static $many_many_extraFields = [
-  //   'RelationName' =>['FieldName' => 'FieldType']
-  // ];
+  private static $many_many_extraFields = [
+    'SidebarWidgets' => ['SortOrder' => 'Int']
+  ];
 
+  private static $belongs_many_many = [];
   private static $searchable_fields = [];
-  private static $summary_fields = [
-    'Title' => 'Titel',
-    'ShowTitle.Nice' => 'Titel anzeigen',
-    'ExtraContent' => 'Vorgefertigter Inhalt'
-  ];
+  private static $summary_fields = [];
 
-  private static $default_sort = 'Title';
+  // private static $default_sort = ;
   private static $defaults = [];
 
   public function populateDefaults() {
@@ -39,6 +37,8 @@ class SidebarWidget extends DataObject {
 
   public function onBeforeWrite() {
     parent::onBeforeWrite();
+
+    $this->Title = 'Sidebar "' . $this->PageType . '" Template';
   }
 
   public function onAfterWrite() {
@@ -53,7 +53,6 @@ class SidebarWidget extends DataObject {
     parent::onAfterDelete();
   }
 
-  
   public function canCreate($member = null) {
     $can = Permission::check(['ADMIN', 'CMSACCESSLeftAndMain', 'SITETREEEDITALL']);
     return $can;
@@ -88,31 +87,22 @@ class SidebarWidget extends DataObject {
   public function getCMSFields() {
     // $fields = parent::getCMSFields();
     // $fields->addFieldsToTab('Root.Main', []);
-    
+
+    $pageTypeSrc = ClassInfo::subclassesFor('Page');
+
     $fields = FieldList::create(
       TabSet::create('Root',
         Tab::create('Main', 'Hauptteil',
-          TextField::create('Title', 'Titel')
-            ->setRightTitle('[title] = aktueller Seitentitel'),
-          DropdownField::create('ShowTitle', 'Titel anzeigen', [1 => 'Ja', 0 => 'Nein'], 1),
-          DropdownField::create('ExtraContent', 'Vorgefertigte Inhalte', [
-            'navigation' => 'Navigation / Unterseiten',
-            'contact' => 'Kontaktdaten',
-            'address' => 'Adresse',
-            'socialmedia' => 'Social Media'
-          ])->setEmptyString('(Bitte auswählen)'),
-          $content = HTMLEditorField::create('Content', 'Inhalt')
-            ->setRows(15)
+          DropdownField::create('PageType', 'Seitentyp', $pageTypeSrc),
+          GridField::create('SidebarWidgets', 'Widgets', $this->owner->SidebarWidgets(), SFGrid_Relation_Multi::create(30, false, 'SortOrder'))
         )
       )
     );
 
-    $content->hideIf('ExtraContent')->isNotEmpty();
+    if(!$this->ID) {
+      $fields->removeByName('SidebarWidgets');
+    }
 
     return $fields;
-  }
-
-  public function WidgetLayout() {
-    return $this->renderWith($this->ClassName);
   }
 }
