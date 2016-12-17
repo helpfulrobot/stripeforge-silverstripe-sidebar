@@ -26,7 +26,11 @@ class SidebarTemplate extends DataObject {
 
   private static $belongs_many_many = [];
   private static $searchable_fields = [];
-  private static $summary_fields = [];
+  private static $summary_fields = [
+    'Title' => 'Titel',
+    'PageType' => 'Seitentyp',
+    'SidebarWidgets.Count' => 'Widgets'
+  ];
 
   // private static $default_sort = ;
   private static $defaults = [];
@@ -83,6 +87,28 @@ class SidebarTemplate extends DataObject {
 
   //   return $result;
   // }
+
+  private static $better_buttons_actions = array (
+    'syncPages'
+  );
+
+ public function getBetterButtonsActions() {
+    $fields = parent::getBetterButtonsActions();
+    $fields->push(BetterButtonCustomAction::create('syncPages', 'Synchronisieren'));
+    return $fields;
+  }
+
+  public function syncPages() {
+    if($className = $this->PageType) {
+      $pages = $className::get();
+      
+      foreach($pages as $page) {
+        $page->addSidebarWidgets($this);
+      }
+
+      return 'Sidebar Widgets wurden ueber alle Seiten vom Typ "' . $this->PageType . '" synchronisiert.';
+    }
+  }
 
   public function getCMSFields() {
     // $fields = parent::getCMSFields();

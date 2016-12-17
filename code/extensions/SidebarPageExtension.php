@@ -17,11 +17,14 @@ class SidebarPageExtension extends DataExtension {
     parent::onBeforeWrite();
 
     if(!$this->owner->SidebarTemplateAttached && $this->owner->ID && $template = SidebarTemplate::get()->find('PageType', $this->owner->ClassName)) {
-      foreach($template->SidebarWidgets() as $widget) {
-        $this->owner->SidebarWidgets()->add($widget, ['SortOrder' => $widget->SortOrder]);      
-      }
-
+      $this->owner->addSidebarWidgets($template);
       $this->owner->SidebarTemplateAttached = true;
+    }
+  }
+
+  public function addSidebarWidgets($template) {
+    foreach($template->SidebarWidgets() as $widget) {
+      $this->owner->SidebarWidgets()->add($widget, ['SortOrder' => $widget->SortOrder]);      
     }
   }
 
