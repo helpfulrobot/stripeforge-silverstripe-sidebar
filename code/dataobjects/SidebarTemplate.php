@@ -78,15 +78,15 @@ class SidebarTemplate extends DataObject {
     return $can;
   }
 
-  // public function validate() {
-  //   $result = parent::validate();
+  public function validate() {
+    $result = parent::validate();
 
-  //   if($this->Value == 'Key') {
-  //     $result->error('Custom Error Message');
-  //   }
+    if(SidebarTemplate::get()->exclude('ID', $this->ID)->find('PageType', $this->PageType)) {
+      $result->error('Ein Sidebar Template für diesen Seitentyp existiert bereits.');
+    }
 
-  //   return $result;
-  // }
+    return $result;
+  }
 
   private static $better_buttons_actions = array (
     'syncPages'
@@ -94,13 +94,15 @@ class SidebarTemplate extends DataObject {
 
  public function getBetterButtonsActions() {
     $fields = parent::getBetterButtonsActions();
-    $fields->push(BetterButtonCustomAction::create('syncPages', 'Synchronisieren'));
+    if($this->ID) {
+      $fields->push(BetterButtonCustomAction::create('syncPages', 'Synchronisieren'));
+    }
     return $fields;
   }
 
   public function syncPages() {
     if($className = $this->PageType) {
-      $pages = $className::get();
+      $pages = $className::get()->filter('ClassName', $className);
       
       foreach($pages as $page) {
         $page->addSidebarWidgets($this);
@@ -127,6 +129,7 @@ class SidebarTemplate extends DataObject {
 
     if(!$this->ID) {
       $fields->removeByName('SidebarWidgets');
+      $fields->insertAfter(LiteralField::create('Notice', '<div class="message notice">Nach dem speichern können Widgets hinzugefügt werden.</div>'), 'PageType');
     }
 
     return $fields;
