@@ -1,5 +1,7 @@
-<% if $Content %>
-  <div class="sidebar-widget__text">
-    $Content
-  </div>
-<% end_if %>
+<% cached $LastEdited %>
+  <% if $Content %>
+    <div class="sidebar-widget__text">
+      $Content
+    </div>
+  <% end_if %>
+<% end_cached %>
