@@ -1,4 +1,4 @@
-<% cached $SidebarWidgets.max(LastEdited), $SidebarWidgets.Count, $LastEdited, $Parent.LastEdited, $Parent.ID, $ID %>
+<% cached $SidebarWidgets.max(LastEdited), $SidebarWidgets.Count, $LastEdited, $Parent.LastEdited, $ID %>
   <% if $SidebarWidgets %>
     <aside class="page__sidebar">
       <% loop $SidebarWidgets.Sort(SortOrder) %>
@@ -7,7 +7,11 @@
             <strong class="sidebar-widget__title">
               <% if $Title == [title] %>
                 <% if $ExtraContent == navigation %>
-                  $Top.Parent.MenuTitle
+                  <% if $Top.Parent.MenuTitle %>
+                    $Top.Parent.MenuTitle
+                  <% else %>
+                    $Top.MenuTitle
+                  <% end_if %>
                 <% else %>
                   $Top.MenuTitle
                 <% end_if %>
