@@ -1,4 +1,4 @@
-<% cached $SidebarWidgets.max(LastEdited), $SidebarWidgets.Count, $LastEdited %>
+<% cached $SidebarWidgets.max(LastEdited), $SidebarWidgets.Count, $LastEdited, $Parent.LastEdited, $Parent.ID, $ID %>
   <% if $SidebarWidgets %>
     <aside class="page__sidebar">
       <% loop $SidebarWidgets.Sort(SortOrder) %>
