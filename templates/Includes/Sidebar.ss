@@ -2,7 +2,7 @@
   <% if $SidebarWidgets %>
     <aside class="page__sidebar">
       <% loop $SidebarWidgets.Sort(SortOrder) %>
-        <div class="sidebar-widget sidaber-widget--$ClassName.Lowercase">
+        <div class="sidebar-widget sidaber-widget--<% if not $ExtraContent %>$ClassName.Lowercase<% else %>$ExtraContent<% end_if %>">
           <% if $ShowTitle %>
             <strong class="sidebar-widget__title">
               <% if $Title == [title] %>

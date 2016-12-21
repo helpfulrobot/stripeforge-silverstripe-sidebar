@@ -363,3 +363,7 @@
   height: auto;
   image-rendering: pixelated;
 }
+/* line 67, ../scss/sidebar.scss */
+.page__sidebar .sidebar-widget.sidaber-widget--navigation {
+  display: block !important;
+}

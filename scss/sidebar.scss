@@ -63,5 +63,9 @@
         @include resp-img();
       }
     }
+
+    &.sidaber-widget--navigation {
+      display: block !important;
+    }
   }
 }
