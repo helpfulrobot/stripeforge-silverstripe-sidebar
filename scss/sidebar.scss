@@ -66,6 +66,12 @@
 
     &.sidaber-widget--navigation {
       display: block !important;
+      
+      @include breakpoint(null, $bp-m) {
+        .sidebar-widget__title {
+          display: none;
+        }
+      }
     }
   }
 }
