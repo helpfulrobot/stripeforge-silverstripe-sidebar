@@ -1,5 +1,5 @@
 <% cached $SidebarWidgets.max(LastEdited), $SidebarWidgets.Count, $LastEdited, $Parent.LastEdited, $Parent.ID, $ID %>
-  <% if $SidebarWidgets %>
+  <% if $SidebarHasContent && $SidebarWidgets %>
     <aside class="page__sidebar">
       <% loop $SidebarWidgets.Sort(SortOrder) %>
         <div class="sidebar-widget sidaber-widget--<% if not $ExtraContent %>$ClassName.Lowercase<% else %>$ExtraContent<% end_if %>">
