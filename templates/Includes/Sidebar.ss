@@ -7,7 +7,11 @@
             <strong class="sidebar-widget__title">
               <% if $Title == [title] %>
                 <% if $ExtraContent == navigation %>
-                  $Top.Parent.MenuTitle
+                  <% if $Top.Parent.MenuTitle %>
+                    $Top.Parent.MenuTitle
+                  <% else %>
+                    $Top.MenuTitle
+                  <% end_if %>
                 <% else %>
                   $Top.MenuTitle
                 <% end_if %>
