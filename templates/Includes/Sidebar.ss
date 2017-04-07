@@ -2,9 +2,9 @@
   <% if not $HideSidebar %>
     <aside class="page__sidebar">
       <% loop $SidebarWidgets.Sort('SortOrder') %>
-        <div class="sidebar-widget sidaber-widget--$ClassName.Lowercase">
+        <div class="sidebar__widget sidaber__widget--$ClassName.Lowercase">
           <% if $ShowTitle %>
-            <strong class="sidebar-widget__title">
+            <strong class="widget__title">
               <% if $Title == '[title]' %>
                 $Top.MenuTitle
               <% else %>

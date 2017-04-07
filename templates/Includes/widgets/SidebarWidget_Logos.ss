@@ -1,6 +1,6 @@
 <% cached $LastEdited, $Logos.Count, $Logos.max(LastEdited) %>
   <% if $Logos %>
-    <div class="sidebar-widget__logos">
+    <div class="widget__logos">
       <% loop $Logos.Sort(SortOrder) %>
         <% if $WebsiteLink %>
           <a href="$WebsiteLink" target="_blank">

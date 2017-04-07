@@ -10,11 +10,11 @@
     @include span(3 of 12 last);
 
     .sidebar__widget {
-      margin-bottom: $dist;
-      padding-bottom: $dist;
+      margin-bottom: $dist/2;
+      padding-bottom: $dist/2;
       border-bottom: 1px solid $border-color;
 
-      .sidebar-widget__title {
+      .widget__title {
         display: block;
         font-family: $ff-h;
         font-weight: $fw-h-bold;
@@ -29,25 +29,25 @@
       }
     }
 
-      .sidebar-widget__logos {
-        a {
-          display: block;
-        }
+    .widget__logos {
+      a {
+        display: block;
+      }
 
-        & > * {
-          margin-bottom: $dist/2;
+      & > * {
+        margin-bottom: $dist/2;
 
-          &:last-child {
-            margin-bottom: 0;
-          }
-        }
-
-        img {
-          display: block;
-          width: 100%;
-          height: auto;
+        &:last-child {
+          margin-bottom: 0;
         }
       }
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+    }
   }
 }
 

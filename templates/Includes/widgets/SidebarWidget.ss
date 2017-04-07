@@ -1,6 +1,6 @@
 <% cached $LastEdited %>
   <% if $Content %>
-    <div class="sidebar-widget__text">
+    <div class="widget__text">
       $Content
     </div>
   <% end_if %>
