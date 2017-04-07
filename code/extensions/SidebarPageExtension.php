@@ -2,7 +2,8 @@
 class SidebarPageExtension extends DataExtension {
 
   private static $db = [
-    'SidebarTemplateAttached' => 'Boolean'
+    'SidebarTemplateAttached' => 'Boolean',
+    'HideSidebar' => 'Int',
   ];
 
   private static $many_many = [

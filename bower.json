@@ -1,0 +1,20 @@
+{
+  "name": "bower-dependencies",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "bower_components/jquery",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "susy": "^2.2.12"
+  },
+  "install": {
+    "path": "bower",
+    "sources": {
+      "susy": "bower_components/susy/**"
+    }
+  }
+}

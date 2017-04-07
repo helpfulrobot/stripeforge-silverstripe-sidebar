@@ -1,77 +1,58 @@
-@import 'compass/css3';
-@import '../../mysite/scss/vendor/_fontawesome-variables';
-@import '../../mysite/scss/_mixins';
-@import '../../mysite/scss/_variables';
-@import '../../mysite/scss/_extends';
+@import "_settings";
+@import "../bower/susy/sass/_susy.scss";
 
-.page__sidebar {
-  .sidebar-widget {
-    &:not(:last-of-type) {
-      margin-bottom: $dist/2;
-      padding-bottom: $dist/2;
+@include breakpoint($bp-m, null) {
+  .page__main--has-sidebar {
+    @include span(9 of 12);
+  }
+
+  .page__sidebar {
+    @include span(3 of 12 last);
+
+    .sidebar__widget {
+      margin-bottom: $dist;
+      padding-bottom: $dist;
       border-bottom: 1px solid $border-color;
-    }
 
-    a {
-      color: $fc;
-      text-decoration: none;
-
-      &:hover {
-        color: $ac;
-        text-decoration: underline;
-      }
-    }
-
-    .sidebar-widget__title {
-      display: block;
-      font-family: $ff-headline;
-      font-weight: $fw-headline-bold;
-      font-size: $fs-h4;
-      margin-bottom: $dist/2;
-    }
-
-    .global-contact-details {
-      margin: 0;
-      padding: 0;
-      font-size: $fs;
-
-      ul {
-        margin: 0;
-      }
-
-      .global-contact-details__address {
-        a {
-          display: none;
-        }
-      }
-    }
-
-    .sidebar-widget__logos {
-      a {
+      .sidebar-widget__title {
         display: block;
-      }
-
-      & > * {
+        font-family: $ff-h;
+        font-weight: $fw-h-bold;
+        font-size: $fs-h4;
         margin-bottom: $dist/2;
-
-        &:last-child {
-          margin-bottom: 0.5em;
-        }
       }
 
-      img {
-        @include resp-img();
+      &:last-of-type {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: 0;
       }
     }
 
-    &.sidaber-widget--navigation {
-      display: block !important;
-      
-      @include breakpoint(null, $bp-m) {
-        .sidebar-widget__title {
-          display: none;
+      .sidebar-widget__logos {
+        a {
+          display: block;
+        }
+
+        & > * {
+          margin-bottom: $dist/2;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+
+        img {
+          display: block;
+          width: 100%;
+          height: auto;
         }
       }
-    }
+  }
+}
+
+@include breakpoint(null, $bp-m) {
+  .page__sidebar {
+    margin-top: $dist;
   }
 }

@@ -1,0 +1,37 @@
+$dist: 36px;
+$border-color: #cccccc;
+$fc: #000000;
+$ac: #b90820;
+$ff-h: sans-serif;
+$fw-h-bold: 700;
+$fs: 16px;
+$fs-h4: 18px;
+$bp-m: 768px;
+
+@mixin breakpoint($from: null, $to: null, $incrementFrom: true) {
+  @if $from != null and $to != null {
+    @if $incrementFrom {
+      $from: $from + 1px;
+    }
+
+    @media screen and (min-width: $from) and (max-width: $to) {
+      @content;
+    }
+  }
+
+  @if $from !=null and $to == null {
+    @if $incrementFrom {
+      $from: $from + 1px;
+    }
+
+    @media screen and (min-width: $from) {
+      @content;
+    }
+  }
+
+  @if $from == null and $to != null {
+    @media screen and (max-width: $to) {
+      @content;
+    }
+  }
+}

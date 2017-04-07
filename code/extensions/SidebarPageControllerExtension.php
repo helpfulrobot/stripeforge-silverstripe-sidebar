@@ -1,14 +1,13 @@
 <?php
 class SidebarPageControllerExtension extends DataExtension {
 
-  public function onAftersInit() {
+  public function onAfterInit() {
     global $moduleSidebar;
-
     Requirements::css($moduleSidebar . '/css/sidebar.css');
   }
 
   public function HideSidebar() {
-    if($this->owner->HideSidebar == 1) {
+    if(!$this->owner->HideSidebar || $this->owner->HideSidebar == 1) {
       return true;
     } else if($this->owner->HideSidebar == 2) {
       return $this->owner->SidebarHasContent();
