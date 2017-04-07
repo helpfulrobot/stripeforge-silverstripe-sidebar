@@ -10,7 +10,11 @@ class SidebarPageControllerExtension extends DataExtension {
     if(!$this->owner->HideSidebar || $this->owner->HideSidebar == 1) {
       return true;
     } else if($this->owner->HideSidebar == 2) {
-      return $this->owner->SidebarHasContent();
+      if($this->owner->SidebarHasContent()) {
+        return false;
+      } else {
+        return true;
+      }
     } else if($this->owner->HideSidebar == 3) {
       if($parent = $this->owner->Parent()) {
         if($parent->ClassName != 'SiteTree') {
@@ -34,7 +38,7 @@ class SidebarPageControllerExtension extends DataExtension {
     }
 
     $this->owner->extend('updateSidebarHasContent', $result);
-    
+
     return $result;
   }
 }
