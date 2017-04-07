@@ -1,7 +1,5 @@
 ---
 Name: sidebar
-After: 
-  - '#sidebar'
 ---
 Page:
   extensions:
@@ -12,3 +10,10 @@ Page_Controller:
 SiteConfig:
   extensions:
     - SidebareSiteConfigExtension
+---
+Only:
+  moduleexists: 'Fluent'
+---
+SidebarWidget:
+  extensions:
+    - FluentExtension

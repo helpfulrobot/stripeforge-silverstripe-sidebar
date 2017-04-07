@@ -1,36 +1,18 @@
-<% cached $SidebarWidgets.max(LastEdited), $SidebarWidgets.Count, $LastEdited, $Parent.LastEdited, $Parent.ID, $ID %>
-  <% if $SidebarHasContent && $SidebarWidgets %>
+<% cached 'sidebar', $CurrentLocale, $SidebarWidgets.max('LastEdited'), $SidebarWidgets.Count, $LastEdited, $Parent.LastEdited, $Parent.ID, $ID %>
+  <% if not $HideSidebar %>
     <aside class="page__sidebar">
-      <% loop $SidebarWidgets.Sort(SortOrder) %>
-        <div class="sidebar-widget sidaber-widget--<% if not $ExtraContent %>$ClassName.Lowercase<% else %>$ExtraContent<% end_if %>">
+      <% loop $SidebarWidgets.Sort('SortOrder') %>
+        <div class="sidebar-widget sidaber-widget--$ClassName.Lowercase">
           <% if $ShowTitle %>
             <strong class="sidebar-widget__title">
-              <% if $Title == [title] %>
-                <% if $ExtraContent == navigation %>
-                  <% if $Top.Parent.MenuTitle %>
-                    $Top.Parent.MenuTitle
-                  <% else %>
-                    $Top.MenuTitle
-                  <% end_if %>
-                <% else %>
-                  $Top.MenuTitle
-                <% end_if %>
+              <% if $Title == '[title]' %>
+                $Top.MenuTitle
               <% else %>
                 $Title
               <% end_if %>
             </strong>
           <% end_if %>
-          <% if $ExtraContent == navigation %>
-            <% include SidebarWidget_Navigation Page=$Top %>
-          <% else_if $ExtraContent == contact %>
-            <% include GlobalContactDetails HideAddress=true, ExtraCacheParameter=$ID %>
-          <% else_if $ExtraContent == address %>
-            <% include GlobalContactDetails HideContact=true, ExtraCacheParameter=$ID %>
-          <% else_if $ExtraContent == socialmedia %>
-            <% include GlobalSocialMedia %>
-          <% else %>
-            $WidgetLayout
-          <% end_if %>
+          $WidgetLayout
         </div>
       <% end_loop %>
     </aside>

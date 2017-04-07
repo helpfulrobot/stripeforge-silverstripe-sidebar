@@ -1,1 +1,6 @@
-delete Sidebar.ss and SidebarNavigation.ss from mysite Folder
+````html
+  <main class="page__main<% if not $HideSidebar %> page__main--has-sidebar<% end_if %>">
+    ...
+  </main>
+  <% include Sidebar %>
+````

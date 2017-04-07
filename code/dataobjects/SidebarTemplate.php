@@ -13,9 +13,6 @@ class SidebarTemplate extends DataObject {
     'SiteConfig' => 'SiteConfig'
   ];
 
-  private static $belongs_to = [];
-  private static $has_many = [];
-
   private static $many_many = [
     'SidebarWidgets' => 'SidebarWidget'
   ];
@@ -24,37 +21,16 @@ class SidebarTemplate extends DataObject {
     'SidebarWidgets' => ['SortOrder' => 'Int']
   ];
 
-  private static $belongs_many_many = [];
-  private static $searchable_fields = [];
   private static $summary_fields = [
     'Title' => 'Titel',
     'PageType' => 'Seitentyp',
     'SidebarWidgets.Count' => 'Widgets'
   ];
 
-  // private static $default_sort = ;
-  private static $defaults = [];
-
-  public function populateDefaults() {
-    parent::populateDefaults();
-  }
-
   public function onBeforeWrite() {
     parent::onBeforeWrite();
 
     $this->Title = 'Sidebar "' . $this->PageType . '" Template';
-  }
-
-  public function onAfterWrite() {
-    parent::onAfterWrite();
-  }
-
-  public function onBeforeDelete() {
-    parent::onBeforeDelete();
-  }
-
-  public function onAfterDelete() {
-    parent::onAfterDelete();
   }
 
   public function canCreate($member = null) {
@@ -73,7 +49,6 @@ class SidebarTemplate extends DataObject {
   }
 
   public function canView($member = null) {
-    // $can = Permission::check(['ADMIN', 'CMSACCESSLeftAndMain', 'SITETREEVIEWALL']);
     $can = true;
     return $can;
   }
@@ -108,21 +83,18 @@ class SidebarTemplate extends DataObject {
         $page->addSidebarWidgets($this);
       }
 
-      return 'Sidebar Widgets wurden ueber alle Seiten vom Typ "' . $this->PageType . '" synchronisiert.';
+      return 'Sidebar Widgets wurden über alle Seiten vom Typ "' . $this->PageType . '" hinweg synchronisiert.';
     }
   }
 
   public function getCMSFields() {
-    // $fields = parent::getCMSFields();
-    // $fields->addFieldsToTab('Root.Main', []);
-
     $pageTypeSrc = ClassInfo::subclassesFor('Page');
 
     $fields = FieldList::create(
       TabSet::create('Root',
         Tab::create('Main', 'Hauptteil',
           DropdownField::create('PageType', 'Seitentyp', $pageTypeSrc),
-          GridField::create('SidebarWidgets', 'Widgets', $this->owner->SidebarWidgets(), SFGrid_Relation_Multi::create(30, false, 'SortOrder'))
+          GridField::create('SidebarWidgets', 'Widgets', $this->owner->SidebarWidgets(), $gc = SidebarGridConfig::create(30, 'SortOrder'))
         )
       )
     );
@@ -130,6 +102,8 @@ class SidebarTemplate extends DataObject {
     if(!$this->ID) {
       $fields->removeByName('SidebarWidgets');
       $fields->insertAfter(LiteralField::create('Notice', '<div class="message notice">Nach dem speichern können Widgets hinzugefügt werden.</div>'), 'PageType');
+    } else {
+      $gc->set(['relation', 'multi']);
     }
 
     return $fields;

@@ -10,6 +10,10 @@
   "extra": {
     "installer-name": "sidebar"
   },
+  "require": {
+    "silverstripe-australia/gridfieldextensions": "1.*",
+    "bummzack/sortablefile": "1.*"
+  },
   "authors": [
     {
       "name": "Benedikt Hofstaetter",

@@ -1,29 +1,41 @@
 <?php
 class SidebarPageControllerExtension extends DataExtension {
 
-  public function onBeforeInit() {
+  public function onAftersInit() {
     global $moduleSidebar;
 
-    // - Requirements Management CSS Files
-    $moduleCSSFiles = Session::get('SFModuleCSSFiles');
-
-    if(!$moduleCSSFiles) {
-      $moduleCSSFiles = [];
-    }
-
-    $requiredCSSFiles = array_flip([
-      $moduleSidebar . '/css/sidebar.css',
-    ]);
-
-    $requiredCSSFiles = array_merge($moduleCSSFiles, $requiredCSSFiles);
-    Session::set('SFModuleCSSFiles', $requiredCSSFiles);
+    Requirements::css($moduleSidebar . '/css/sidebar.css');
   }
 
-  public function updateSidebarHasContent(Boolean $bool) {
-    if($this->owner->SidebarWidgets()->first()) {
-      $bool->setValue(true);
-    } else {
-      $bool->setValue(false);
+  public function HideSidebar() {
+    if($this->owner->HideSidebar == 1) {
+      return true;
+    } else if($this->owner->HideSidebar == 2) {
+      return $this->owner->SidebarHasContent();
+    } else if($this->owner->HideSidebar == 3) {
+      if($parent = $this->owner->Parent()) {
+        if($parent->ClassName != 'SiteTree') {
+          return $parent->HideSidebar();
+        } else {
+          return SiteConfig::current_site_config()->HideSidebar;
+        }
+      } else {
+        return SiteConfig::current_site_config()->HideSidebar;
+      }
     }
+  }
+
+  public function SidebarHasContent() {
+    $result = Boolean::create();
+
+    if($this->owner->SidebarWidgets()->first()) {
+      $result->setValue(true);
+    } else {
+      $result->setValue(false);
+    }
+
+    $this->owner->extend('updateSidebarHasContent', $result);
+    
+    return $result;
   }
 }
