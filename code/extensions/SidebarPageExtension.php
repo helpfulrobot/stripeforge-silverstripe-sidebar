@@ -14,6 +14,12 @@ class SidebarPageExtension extends DataExtension {
     'SidebarWidgets' => ['SortOrder' => 'Int']
   ];
 
+  public function populateDefaults() {
+    parent::populateDefaults();
+
+    $this->HideSidebar = 3;
+  }
+
   public function onBeforeWrite() {
     parent::onBeforeWrite();
 
