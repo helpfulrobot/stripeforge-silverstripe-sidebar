@@ -23,6 +23,10 @@ class SidebarPageExtension extends DataExtension {
   public function onBeforeWrite() {
     parent::onBeforeWrite();
 
+    if(!$this->ID) {
+      $this->HideSidebar = 3;
+    }
+
     if(!$this->owner->SidebarTemplateAttached && $this->owner->ID && $template = SidebarTemplate::get()->find('PageType', $this->owner->ClassName)) {
       $this->owner->addSidebarWidgets($template);
       $this->owner->SidebarTemplateAttached = true;
