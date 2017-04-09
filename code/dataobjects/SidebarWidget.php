@@ -19,8 +19,6 @@ class SidebarWidget extends DataObject {
     'ShowTitle.Nice' => 'Titel anzeigen',
   ];
 
-  private static $default_sort = 'Title';
-
   public function canCreate($member = null) {
     $can = Permission::check(['ADMIN', 'CMSACCESSLeftAndMain', 'SITETREEEDITALL']);
     return $can;
