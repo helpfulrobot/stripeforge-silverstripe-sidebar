@@ -51,4 +51,10 @@ class SidebarPageExtension extends DataExtension {
       $fields->insertAfter(LiteralField::create('Notice', '<div class="message notice">Nach dem speichern werden die im Template hinterlegten Widgets hinzugefügt.</div>'), 'SidebarWidgets');
     }
   }
+
+  public function HideSidebar() {
+    // todo: BUG!
+
+    return true;
+  }
 }
