@@ -10,20 +10,16 @@ class SidebarPageControllerExtension extends DataExtension {
     if(!$this->owner->HideSidebar || $this->owner->HideSidebar == 1) {
       return true;
     } else if($this->owner->HideSidebar == 2) {
-      if($this->owner->SidebarHasContent()) {
-        return false;
-      } else {
-        return true;
-      }
+      return !$this->owner->SidebarHasContent();
     } else if($this->owner->HideSidebar == 3) {
       if($parent = $this->owner->Parent()) {
         if($parent->ClassName != 'SiteTree') {
           return $parent->HideSidebar();
         } else {
-          return SiteConfig::current_site_config()->HideSidebar;
+          return !SiteConfig::current_site_config()->HideSidebar;
         }
       } else {
-        return SiteConfig::current_site_config()->HideSidebar;
+        return !SiteConfig::current_site_config()->HideSidebar;
       }
     }
   }
@@ -37,7 +33,9 @@ class SidebarPageControllerExtension extends DataExtension {
       $result->setValue(false);
     }
 
-    $this->owner->extend('updateSidebarHasContent', $result);
+    if($this->owner->hasMethod('updateSidebarHasContent')) {
+      $result = $this->owner->updateSidebarHasContent();
+    };
 
     return $result;
   }

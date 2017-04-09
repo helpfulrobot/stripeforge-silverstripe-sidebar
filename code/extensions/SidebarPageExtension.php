@@ -17,14 +17,14 @@ class SidebarPageExtension extends DataExtension {
   public function populateDefaults() {
     parent::populateDefaults();
 
-    $this->HideSidebar = 3;
+    $this->owner->HideSidebar = 3;
   }
 
   public function onBeforeWrite() {
     parent::onBeforeWrite();
 
-    if(!$this->ID) {
-      $this->HideSidebar = 3;
+    if(!$this->owner->ID) {
+      $this->owner->HideSidebar = 3;
     }
 
     if(!$this->owner->SidebarTemplateAttached && $this->owner->ID && $template = SidebarTemplate::get()->find('PageType', $this->owner->ClassName)) {
