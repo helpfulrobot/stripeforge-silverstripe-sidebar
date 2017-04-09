@@ -12,7 +12,7 @@ SiteConfig:
     - SidebareSiteConfigExtension
 ---
 Only:
-  moduleexists: 'Fluent'
+  moduleexists: 'fluent'
 ---
 SidebarWidget:
   extensions:
